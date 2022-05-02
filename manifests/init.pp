@@ -130,9 +130,9 @@ class paperless_ngx (
     }
 
     service { 'redis-server':
-      ensure     => running, 
-      enable     => true, 
-      require    => Package[$paperless_ngx::params::redis_package_name],
+      ensure  => running,
+      enable  => true,
+      require => Package[$paperless_ngx::params::redis_package_name],
     }
   }
 
@@ -140,12 +140,11 @@ class paperless_ngx (
   if $manage_user {
     group { $paperless_system_group: }
 
-    user { $paperless_system_user: 
-      groups     => $paperless_system_group,
-      home       => $paperless_directory,
-#      managehome => true,
-      system     => true,
-      shell      => "/usr/sbin/nologin",
+    user { $paperless_system_user:
+      groups => $paperless_system_group,
+      home   => $paperless_directory,
+      system => true,
+      shell  => '/usr/sbin/nologin',
     }
   }
 

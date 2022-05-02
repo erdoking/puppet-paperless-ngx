@@ -60,9 +60,9 @@ class paperless_ngx::config (
     $value = getvar("${key.downcase}")
 
     file_line{ $key:
-      path => '/etc/paperless.conf',
-      match => "${key}=",
-      line => "${key}=${value}",
+      path   => '/etc/paperless.conf',
+      match  => "${key}=",
+      line   => "${key}=${value}",
       notify => Service['paperless-consumer.service', 'paperless-scheduler.service', 'paperless-webserver.service'],
     }
   }
@@ -84,35 +84,33 @@ class paperless_ngx::config (
       $value = getvar("${key.downcase}")
 
       file_line{ $key:
-        path => '/etc/paperless.conf',
-        match => "${key}=",
-        line => "${key}=${value}",
+        path   => '/etc/paperless.conf',
+        match  => "${key}=",
+        line   => "${key}=${value}",
         notify => Service['paperless-consumer.service', 'paperless-scheduler.service', 'paperless-webserver.service'],
       }
     }
   } else {
     ## configure paperless-ng database [sqlite]
     file_line{ 'PAPERLESS_DBHOST':
-      path => '/etc/paperless.conf',
-      match => "PAPERLESS_DBHOST=",
-      line => "#PAPERLESS_DBHOST=${paperless_db_host}",
+      path   => '/etc/paperless.conf',
+      match  => 'PAPERLESS_DBHOST=',
+      line   => "#PAPERLESS_DBHOST=${paperless_db_host}",
       notify => Service['paperless-consumer.service', 'paperless-scheduler.service', 'paperless-webserver.service'],
-    } 
+    }
   }
 
   file_line{ 'configure ghostscript for PDF':
-    path => '/etc/ImageMagick-6/policy.xml',
+    path  => '/etc/ImageMagick-6/policy.xml',
     match => '(\s+)<policy domain="coder" rights=".*" pattern="PDF" />',
-    line => '  <policy domain="coder" rights="read|write" pattern="PDF" />'
+    line  => '  <policy domain="coder" rights="read|write" pattern="PDF" />'
   }
 
   file_line{ 'configure gunicorn web server':
-    path => "${paperless_directory}/gunicorn.conf.py",
-    match => '^bind = ',
-    line => "bind = '${paperless_listen_address}:${paperless_listen_port}'",
-    notify => Service['paperless-webserver.service'], 
+    path   => "${paperless_directory}/gunicorn.conf.py",
+    match  => '^bind = ',
+    line   => "bind = '${paperless_listen_address}:${paperless_listen_port}'",
+    notify => Service['paperless-webserver.service'],
   }
-
-
 
 }

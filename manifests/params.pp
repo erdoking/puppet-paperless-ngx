@@ -41,7 +41,7 @@ class paperless_ngx::params {
   $paperless_db_sslmode = 'prefer'
 
   # Paths and folders
-  $paperless_directory  = "/opt/paperless-ngx"
+  $paperless_directory  = '/opt/paperless-ngx'
   $paperless_consumption_dir = "${paperless_directory}/consumption"
   $paperless_data_dir   = "${paperless_directory}/data"
   $paperless_trash_dir  = ''
@@ -53,14 +53,14 @@ class paperless_ngx::params {
 
   # Hosting & Security
   $paperless_secret_key = 'PLEASECHANGETHISFORTHELOVEOFGOD'
-  $paperless_allowed_hosts = "*"
-  $paperless_cors_allowed_hosts = "http://localhost:8000"
+  $paperless_allowed_hosts = '*'
+  $paperless_cors_allowed_hosts = 'http://localhost:8000'
   $paperless_force_script_name = ''
   $paperless_static_url = '/static/'
   $paperless_auto_login_username = ''
-  $paperless_cookie_prefix = ""
+  $paperless_cookie_prefix = ''
   $paperless_enable_http_remote_user = 'False'
-  $paperless_url = ""
+  $paperless_url = ''
 
   # OCR settings
   $paperless_ocr_language = 'eng'
@@ -80,8 +80,8 @@ class paperless_ngx::params {
 
   # Tika settings
   $paperless_tika_enabled = 'False'
-  $paperless_tika_endpoint = "http://localhost:9998"
-  $paperless_tika_gotenberg_endpoint = "http://localhost:3000"
+  $paperless_tika_endpoint = 'http://localhost:9998'
+  $paperless_tika_gotenberg_endpoint = 'http://localhost:3000'
 
   # Software tweaks
   $paperless_time_zone = 'Europe/Berlin'
@@ -148,7 +148,6 @@ class paperless_ngx::params {
     'python3-setuptools',
     'python3-wheel',
   ]
-
 
   $redis_package_name = [
     'redis-server',
