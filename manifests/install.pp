@@ -52,8 +52,8 @@ class paperless_ngx::install inherits paperless_ngx {
   exec { 'configure paperless superuser':
     command     => "${paperless_virtualenv}/bin/python3 ${paperless_directory}/src/manage.py shell -c \"${creation_script}\"",
     user        => $paperless_system_user,
-#    refreshonly => true,
-#    subscribe   => Exec['create paperlessngx venv']
+    refreshonly => true,
+    subscribe   => Exec['create paperlessngx venv']
   }
 
 }
