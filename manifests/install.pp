@@ -47,13 +47,13 @@ class paperless_ngx::install inherits paperless_ngx {
       else:
         User.objects.create_superuser('${ paperless_superuser_name }', '${ paperless_superuser_email }', '${ paperless_superuser_password }')
         print('changed')
-      | EOT
+    | EOT
 
   exec { 'configure paperless superuser':
     command     => "${paperless_virtualenv}/bin/python3 ${paperless_directory}/src/manage.py shell -c \"${creation_script}\"",
     user        => $paperless_system_user,
-    refreshonly => true,
-    subscribe   => Exec['create paperlessngx venv']
+#    refreshonly => true,
+#    subscribe   => Exec['create paperlessngx venv']
   }
 
 }
