@@ -1,0 +1,18 @@
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import get_hasher
+if User.objects.filter(username='<%= $paperless_ngx::paperless_superuser_name %>').exists():
+  user = User.objects.get(username='<%= $paperless_ngx::paperless_superuser_name %>')
+  old = user.__dict__.copy()
+  user.is_superuser = True
+  user.email = '<%= $paperless_ngx::paperless_superuser_email %>'
+  user.set_password('<%= $paperless_ngx::paperless_superuser_password %>')
+  user.save()
+  new = user.__dict__
+  algorithm, iterations, old_salt, old_hash = old['password'].split('$')
+  new_password_old_salt = get_hasher(algorithm).encode(password='<%= $paperless_ngx::paperless_superuser_password %>', salt=old_salt, iterations=int(iterations))
+  _, _, _, new_hash = new_password_old_salt.split('$')
+  if not (old_hash == new_hash and old['is_superuser'] == new['is_superuser'] and old['email'] == new['email']):
+      print('changed')
+else:
+  User.objects.create_superuser('<%= $paperless_ngx::paperless_superuser_name %>', '<%= $paperless_ngx::paperless_superuser_email %>', '<%= $paperless_ngx::paperless_superuser_password %>')
+  print('changed')
