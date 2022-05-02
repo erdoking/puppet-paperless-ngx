@@ -44,16 +44,16 @@ class paperless_ngx::install inherits paperless_ngx {
       _, _, _, new_hash = new_password_old_salt.split('$')
       if not (old_hash == new_hash and old['is_superuser'] == new['is_superuser'] and old['email'] == new['email']):
         print('changed')
-      else:
-        User.objects.create_superuser('${ paperless_superuser_name }', '${ paperless_superuser_email }', '${ paperless_superuser_password }')
-        print('changed')
+    else:
+      User.objects.create_superuser('${ paperless_superuser_name }', '${ paperless_superuser_email }', '${ paperless_superuser_password }')
+      print('changed')
     | EOT
 
   exec { 'configure paperless superuser':
     command     => "${paperless_virtualenv}/bin/python3 ${paperless_directory}/src/manage.py shell -c \"${creation_script}\"",
     user        => $paperless_system_user,
-    refreshonly => true,
-    subscribe   => Exec['create paperlessngx venv']
+#    refreshonly => true,
+#    subscribe   => Exec['create paperlessngx venv']
   }
 
 }
